@@ -36,14 +36,14 @@ DTYPES = {
 
 PARAMS = {
     # Add your parameters below
-    # 'model__max_depth': 7,
-    # 'model__min_samples_split': 20,
-    # 'preprocessor__categories__transformer__use_all': True
+    'model__max_depth': 7,
+    'model__min_samples_split': 20,
+    'preprocessor__categories__transformer__use_all': True
 }
 
 GRID_PARAMS = {
     # Add your grid search params below
-    # 'model__max_depth': [5, 7, 9],
-    # 'model__min_samples_split': [5, 10, 20],
-    # 'preprocessor__categories__transformer__use_all': [False, True]
+    'model__max_depth': [5, 7, 9],
+    'model__min_samples_split': [5, 10, 20],
+    'preprocessor__categories__transformer__use_all': [False, True]
 }

@@ -34,28 +34,27 @@ class CategoriesExtractor(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         # Your code here
-        # [...]
-        pass
+        return self
 
     def transform(self, X):
-        # Your code here
-        # [...]
-        pass
+        categories = X["category"]
+
+        return pd.DataFrame({
+            "gen_cat": categories.apply(lambda x: self._get_slug(x)[0]),
+            "precise_cat": categories.apply(lambda x: self._get_slug(x)[1])
+        })
 
 
 class GoalAdjustor(BaseEstimator, TransformerMixin):
     """Adjusts the goal feature to USD"""
 
     def fit(self, X, y=None):
-        # Your code here
-        # [...]
-        pass
+        return self
 
     def transform(self, X):
-        # Your code here
-        # [...]
-        pass
-
+        return pd.DataFrame({
+            'adjusted_goal': X['goal'] * X['static_usd_rate']
+        })
 
 class TimeTransformer(BaseEstimator, TransformerMixin):
     """Builds features computed from timestamps"""
@@ -63,14 +62,17 @@ class TimeTransformer(BaseEstimator, TransformerMixin):
     adj = 1_000_000_000
 
     def fit(self, X, y=None):
-        # Your code here
-        # [...]
-        pass
+        return self
 
     def transform(self, X):
-        # Your code here
-        # [...]
-        pass
+        deadline = pd.to_datetime(self.adj * X.deadline)
+        created = pd.to_datetime(self.adj * X.created_at)
+        launched = pd.to_datetime(self.adj * X.launched_at)
+
+        return pd.DataFrame({
+            'launched_to_deadline': (deadline - launched).dt.days,
+            'created_to_launched':(launched - created).dt.days
+        })
 
 
 class CountryTransformer(BaseEstimator, TransformerMixin):
@@ -102,11 +104,9 @@ class CountryTransformer(BaseEstimator, TransformerMixin):
     }
 
     def fit(self, X, y=None):
-        # Your code here
-        # [...]
-        pass
+        return self
 
     def transform(self, X):
-        # Your code here
-        # [...]
-        pass
+        return pd.DataFrame({
+            'country': X.country.map(self.countries)
+        })

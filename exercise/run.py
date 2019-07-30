@@ -19,10 +19,12 @@ def main():
         tune_model()
 
     if stage == "train":
+        print("Training model...")
         train_model(print_params=False)
         print("Model was saved")
 
     elif stage == "test":
+        print("Testing model...")
         test_model()
 
 
